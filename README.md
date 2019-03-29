@@ -104,4 +104,4 @@ This project is for demonstration only and is aimed to support the code listed i
 
 We hope you find this useful.
 
-[Endava Team](mailto:java-spektrum@endava.com).
+Endava Team
