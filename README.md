@@ -1,24 +1,22 @@
 
-The current project supports the code examples listed in the article "10 Design-Prinzipien zur Erstellung sicherer Software", published in online journal JavaSpektrum.
+This Java project provides the code examples listed in the article "10 Design-Prinzipien zur Erstellung sicherer Software", published in the online journal JavaSpektrum in March 2019.
 
 
-### 1. REST Client uses X.509 client certificate to authenticate to SpringBoot Server
+### 1. REST Client usingg X.509 client certificate to authenticate to a SpringBoot Server
 
-The first example implements a basic Java Spring Boot application that leverages the Spring Security framework to implement mutual TLS authentication using self-generated digital certtificates.
+The first example implements a basic Java Spring Boot application that leverages the Spring Security framework to implement mutual TLS authentication using self-generated digital certificates.
 
-In order for the application to work there are few steps that must be completed in the background using the `keytool` from one of the latest Java SDK.
-The code requires for you to be able to run `make` command in the unix-like environment.
-The Makefile had been tested in two main environments: Fedora 29 on VirtualBox VM, MacOS Mojave.
+In order for the application to work there are few initial steps, explained below, that must be completed before using the code.  These require use of the `keytool` from a recent Java SDK.  These steps require you to be able to run a `make` command in a Unix-like environment.  The Makefile has been tested in two environments: Fedora 29 on a VirtualBox VM and MacOS Mojave.
 
 
 #### 1. Generate the keys
-- before running the make command, make sure you are happy with the keys segregation and passwords.
+- before running the make command, inspect the commands listed below to make sure that you are happy with the key segregation and passwords used.
 ```
 cd keystore
 make all
 ```
 
-The output would look as the one below
+The output would similar to the listing below:
 ```
 # Generate a certificate authority (CA), store in ca_keystore
 keytool -genkey -alias java4spektrum_ca -ext BC=ca:true \
@@ -82,27 +80,28 @@ Certificate was added to keystore
 ```
 
 
-#### 2. Copy Server's and Client's keystores and truststore in the classpath
-- at this step you must copy `srv_keystore.jks`, `srv_truststore.jks` into the `src/main/resources` folder in your project
-- you also must copy the `cln_truststore.jks`, `cln_keystore.jks` into the `src/test/resources`
+#### 2. Copy Server's and Client's keystores and truststore to the classpath
+- copy `srv_keystore.jks` and `srv_truststore.jks` into the `src/main/resources` folder in your project
+- copy `cln_truststore.jks` and `cln_keystore.jks` into the `src/test/resources` folder in your project
 
 #### 3. Alter your local DNS records
-Since all the certificates had been creates for a fake domain name `java4spektrum.com` in order for you tests to succeed, the Spring Boot server must be available at that name. 
-Fon unix-like systems, you must add a new record in you local DNS file `/etc/hosts` as folows `127.0.0.1 java4spektrum.com`
-For Windows its usually in `C:\Windows\System32\Drivers\etc\hosts`. 
-Remember, both the systems require privileged access to make the changes. 
+All of the certificates have been created for a fake domain name `java4spektrum.com` so in order for the tests to succeed, the Spring Boot server must be available at that DNS name. 
 
-#### 4. Configure you IDE to register an run the jUnit tests. 
-Follow the guidance for your IDE or the environment in which you run yur automatic tests. If all done correctly the tests will succeed.
+Fon Unix-like systems, the simplest approach is to add a new record in your local DNS file `/etc/hosts` to resolve that name to the local loopback interface.  The line needed is: `127.0.0.1 java4spektrum.com`
 
+For Windows the same approach can be used, but the host file is usually `C:\Windows\System32\Drivers\etc\hosts`. 
 
-### 2. SpringBoot REST API Controller implements logging using Log4j2
+Both systems require privileged access to make the changes. 
 
-In this example we will use the Log4j2 library to define output and logging strategy.
-The configuration is done in the log4j2.xml file located in the `src/main/resources`. You can define your own file location and strategy by editing that file.
+#### 4. Configure your IDE to register and run the JUnit tests. 
+Follow your normal setup steps to allow you to run the JUnit tests from the project (found in `src/test/java`).
 
-Please be aware that the current project is for demonstration only and is aimed to support the code listed in the original article.
-Please refer to your internal coding  standards, key management and logging standards adopted by your organisation to adapt the code accordingly.
+### 5. Configure the SpringBoot REST API controller to log using Log4j2
 
-All the Best !
-Endava Team.
+This code uses the Log4j2 library to write its log messages.  The configuration for Log4J2 is in the `log4j2.xml` file located in the `src/main/resources` directory. You can change logging parameters such as the file location by editing that file.
+
+This project is for demonstration only and is aimed to support the code listed in the original article.  It is not intended to form the basis of a production application.  Refer to your organisation's coding  standards, key management and logging standards to allow the code to be adapted for use in your environment.
+
+We hope you find this useful.
+
+[Endava Team](mailto:java-spektrum@endava.com).
