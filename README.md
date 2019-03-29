@@ -7,6 +7,7 @@ This Java project provides the code examples listed in the article "10 Design-Pr
 The first example implements a basic Java Spring Boot application that leverages the Spring Security framework to implement mutual TLS authentication using self-generated digital certificates.
 
 In order for the application to work there are few initial steps, explained below, that must be completed before using the code.  These require use of the `keytool` from a recent Java SDK.  These steps require you to be able to run a `make` command in a Unix-like environment.  The Makefile has been tested in two environments: Fedora 29 on a VirtualBox VM and MacOS Mojave.
+We have also added a Windows batch file in the directory keytool/keygen.bat that will help you generate same keys in a Windows environment. 
 
 
 #### 1. Generate the keys
